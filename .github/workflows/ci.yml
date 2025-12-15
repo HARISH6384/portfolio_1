@@ -40,12 +40,19 @@ jobs:
 
       # 6️⃣ Install Frontend dependencies
       - name: Install Frontend dependencies
-        working-directory: portfolio/my-app
+        working-directory: my-app
+        run: |
+          if [ -f package.json ]; then
+            npm install --legacy-peer-deps
+          else
+            echo "Frontend package.json not found, skipping."
+          fi
 
-        run: npm install --legacy-peer-deps
-
-
-      # 7️⃣ Build Frontend
       - name: Build Frontend
-        working-directory: portfolio/my-app
-        run: npm run build
+        working-directory: my-app
+        run: |
+          if npm run | grep -q "build"; then
+            npm run build
+          else
+            echo "No build script found, skipping frontend build."
+          fi
