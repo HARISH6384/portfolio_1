@@ -10,45 +10,33 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # 1️⃣ Checkout the repository
       - uses: actions/checkout@v3
 
-      # 2️⃣ Set up Node.js (shared for both backend and frontend)
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '22'  # Updated to 22 for latest npm compatibility
+          node-version: '22'
           cache: 'npm'
           cache-dependency-path: |
-            project/package-lock.json  # Updated to match backend folder
+            backend/package-lock.json
             my-app/package-lock.json
 
-      # 3️⃣ Install Backend dependencies
       - name: Install Backend dependencies
-        working-directory: project  # Updated to match your backend folder name
-        run: npm ci --legacy-peer-deps  # Temporary flag to bypass peer dependency conflict
+        working-directory: backend
+        run: npm ci --legacy-peer-deps
 
-      # 4️⃣ Run Backend tests (enabled since "test" script exists)
       - name: Run Backend tests
-        working-directory: project  # Updated to match your backend folder name
+        working-directory: backend
         run: npm test
 
-      # 5️⃣ Build Backend (enabled since "build" script exists)
       - name: Build Backend
-        working-directory: project  # Updated to match your backend folder name
+        working-directory: backend
         run: npm run build
 
-      # 6️⃣ Install Frontend dependencies
       - name: Install Frontend dependencies
         working-directory: my-app
         run: npm ci
 
-      # 7️⃣ Run Frontend tests (commented out since no "test" script)
-      # - name: Run Frontend tests
-      #   working-directory: my-app
-      #   run: npm test
-
-      # 8️⃣ Build Frontend (enabled since "build" script exists)
       - name: Build Frontend
         working-directory: my-app
         run: npm run build
