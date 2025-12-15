@@ -12,17 +12,38 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: Set up Node.js
+      - name: Set up Node.js for Backend
         uses: actions/setup-node@v3
         with:
           node-version: '18'
           cache: 'npm'
 
-      - name: Install dependencies
+      - name: Install Backend dependencies
+        working-directory: backend
         run: npm install
 
-      - name: Run tests
+      - name: Run Backend tests
+        working-directory: backend
         run: npm test
 
-      - name: Build project
+      - name: Build Backend
+        working-directory: backend
+        run: npm run build
+
+      - name: Set up Node.js for Frontend
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+          cache: 'npm'
+
+      - name: Install Frontend dependencies
+        working-directory: my-app
+        run: npm install
+
+      - name: Run Frontend tests
+        working-directory: my-app
+        run: npm test
+
+      - name: Build Frontend
+        working-directory: my-app
         run: npm run build
