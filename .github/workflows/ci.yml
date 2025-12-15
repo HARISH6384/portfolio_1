@@ -20,22 +20,22 @@ jobs:
           node-version: '22'  # Updated to 22 for latest npm compatibility
           cache: 'npm'
           cache-dependency-path: |
-            backend/package-lock.json
+            project/package-lock.json  # Updated to match backend folder
             my-app/package-lock.json
 
       # 3️⃣ Install Backend dependencies
       - name: Install Backend dependencies
-        working-directory: backend
+        working-directory: project  # Updated to match your backend folder name
         run: npm ci --legacy-peer-deps  # Temporary flag to bypass peer dependency conflict
 
-      # 4️⃣ Run Backend tests (now enabled since "test" script exists in backend/package.json)
+      # 4️⃣ Run Backend tests (enabled since "test" script exists)
       - name: Run Backend tests
-        working-directory: backend
+        working-directory: project  # Updated to match your backend folder name
         run: npm test
 
-      # 5️⃣ Build Backend (now enabled since "build" script exists in backend/package.json)
+      # 5️⃣ Build Backend (enabled since "build" script exists)
       - name: Build Backend
-        working-directory: backend
+        working-directory: project  # Updated to match your backend folder name
         run: npm run build
 
       # 6️⃣ Install Frontend dependencies
@@ -43,12 +43,12 @@ jobs:
         working-directory: my-app
         run: npm ci
 
-      # 7️⃣ Run Frontend tests (commented out since no "test" script in my-app/package.json)
+      # 7️⃣ Run Frontend tests (commented out since no "test" script)
       # - name: Run Frontend tests
       #   working-directory: my-app
       #   run: npm test
 
-      # 8️⃣ Build Frontend (now enabled since "build" script exists in my-app/package.json)
+      # 8️⃣ Build Frontend (enabled since "build" script exists)
       - name: Build Frontend
         working-directory: my-app
         run: npm run build
