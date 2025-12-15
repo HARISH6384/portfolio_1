@@ -40,11 +40,12 @@ jobs:
 
       # 6️⃣ Install Frontend dependencies
       - name: Install Frontend dependencies
-        working-directory: my-app
+        working-directory: portfolio/my-app
+
         run: npm install --legacy-peer-deps
 
 
       # 7️⃣ Build Frontend
       - name: Build Frontend
-        working-directory: my-app
+        working-directory: portfolio/my-app
         run: npm run build
