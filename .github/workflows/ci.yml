@@ -17,7 +17,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '22'  # Keep at 18, or change to '20'/'22' if you want latest npm
+          node-version: '22'  # Updated to 22 for latest npm compatibility
           cache: 'npm'
           cache-dependency-path: |
             backend/package-lock.json
@@ -26,7 +26,7 @@ jobs:
       # 3️⃣ Install Backend dependencies
       - name: Install Backend dependencies
         working-directory: backend
-        run: npm ci
+        run: npm ci --legacy-peer-deps  # Temporary flag to bypass peer dependency conflict
 
       # 4️⃣ Run Backend tests
       - name: Run Backend tests
@@ -51,4 +51,4 @@ jobs:
       # 8️⃣ Build Frontend
       - name: Build Frontend
         working-directory: my-app
-        run: npm run build
+        run: npm run build  # Fixed: Removed erroneous "Run npm ci"
