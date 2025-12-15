@@ -28,10 +28,10 @@ jobs:
         working-directory: backend
         run: npm ci --legacy-peer-deps  # Temporary flag to bypass peer dependency conflict
 
-      # 4️⃣ Run Backend tests
-      - name: Run Backend tests
-        working-directory: backend
-        run: npm test
+      # 4️⃣ Run Backend tests (commented out until "test" script is added to backend/package.json)
+      # - name: Run Backend tests
+      #   working-directory: backend
+      #   run: npm test
 
       # 5️⃣ Build Backend
       - name: Build Backend
@@ -43,12 +43,12 @@ jobs:
         working-directory: my-app
         run: npm ci
 
-      # 7️⃣ Run Frontend tests
-      - name: Run Frontend tests
-        working-directory: my-app
-        run: npm test
+      # 7️⃣ Run Frontend tests (commented out until "test" script is added to my-app/package.json)
+      # - name: Run Frontend tests
+      #   working-directory: my-app
+      #   run: npm test
 
       # 8️⃣ Build Frontend
       - name: Build Frontend
         working-directory: my-app
-        run: npm run build  # Fixed: Removed erroneous "Run npm ci"
+        run: npm run build
