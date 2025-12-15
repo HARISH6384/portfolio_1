@@ -12,18 +12,18 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      -name: Set up Node.jobs
+      - name: Set up Node.jobs
         uses: actions/setup-node@v3
         with:
           node-version: '18'
           cache: 'npm'
 
-          -name: install dependencies
+        - name: install dependencies
           run: npm install
 
-          -name: run tests
+        - name: run tests
           run: npm tests
-          
-          name: build project
+
+        - name: build project
           run: npm run build
           
