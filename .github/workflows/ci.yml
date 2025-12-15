@@ -1,4 +1,4 @@
-name: portfolio ci
+name: portfolio-ci
 
 on:
   push:
@@ -10,8 +10,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      # 1️⃣ Checkout the repository
       - uses: actions/checkout@v3
 
+      # 2️⃣ Set up Node.js for Backend
       - name: Set up Node.js for Backend
         uses: actions/setup-node@v3
         with:
@@ -19,35 +21,48 @@ jobs:
           cache: 'npm'
           cache-dependency-path: backend/package-lock.json
 
+      # 3️⃣ Update npm to latest
+      - name: Update npm
+        run: npm install -g npm@latest
 
+      # 4️⃣ Install Backend dependencies
       - name: Install Backend dependencies
         working-directory: backend
-        run: npm install
+        run: npm ci
 
+      # 5️⃣ Run Backend tests
       - name: Run Backend tests
         working-directory: backend
         run: npm test
 
+      # 6️⃣ Build Backend
       - name: Build Backend
         working-directory: backend
         run: npm run build
 
+      # 7️⃣ Set up Node.js for Frontend
       - name: Set up Node.js for Frontend
         uses: actions/setup-node@v3
         with:
           node-version: '18'
           cache: 'npm'
           cache-dependency-path: my-app/package-lock.json
-        
 
+      # 8️⃣ Update npm to latest for frontend
+      - name: Update npm (Frontend)
+        run: npm install -g npm@latest
+
+      # 9️⃣ Install Frontend dependencies
       - name: Install Frontend dependencies
         working-directory: my-app
-        run: npm install
+        run: npm ci
 
+      # 🔟 Run Frontend tests
       - name: Run Frontend tests
         working-directory: my-app
         run: npm test
 
+      # 1️⃣1️⃣ Build Frontend
       - name: Build Frontend
         working-directory: my-app
         run: npm run build
