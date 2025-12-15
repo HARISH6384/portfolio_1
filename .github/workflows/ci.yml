@@ -13,56 +13,42 @@ jobs:
       # 1️⃣ Checkout the repository
       - uses: actions/checkout@v3
 
-      # 2️⃣ Set up Node.js for Backend
-      - name: Set up Node.js for Backend
+      # 2️⃣ Set up Node.js (shared for both backend and frontend)
+      - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '18'
+          node-version: '22'  # Keep at 18, or change to '20'/'22' if you want latest npm
           cache: 'npm'
-          cache-dependency-path: backend/package-lock.json
+          cache-dependency-path: |
+            backend/package-lock.json
+            my-app/package-lock.json
 
-      # 3️⃣ Update npm to latest
-      - name: Update npm
-        run: npm install -g npm@latest
-
-      # 4️⃣ Install Backend dependencies
+      # 3️⃣ Install Backend dependencies
       - name: Install Backend dependencies
         working-directory: backend
         run: npm ci
 
-      # 5️⃣ Run Backend tests
+      # 4️⃣ Run Backend tests
       - name: Run Backend tests
         working-directory: backend
         run: npm test
 
-      # 6️⃣ Build Backend
+      # 5️⃣ Build Backend
       - name: Build Backend
         working-directory: backend
         run: npm run build
 
-      # 7️⃣ Set up Node.js for Frontend
-      - name: Set up Node.js for Frontend
-        uses: actions/setup-node@v3
-        with:
-          node-version: '18'
-          cache: 'npm'
-          cache-dependency-path: my-app/package-lock.json
-
-      # 8️⃣ Update npm to latest for frontend
-      - name: Update npm (Frontend)
-        run: npm install -g npm@latest
-
-      # 9️⃣ Install Frontend dependencies
+      # 6️⃣ Install Frontend dependencies
       - name: Install Frontend dependencies
         working-directory: my-app
         run: npm ci
 
-      # 🔟 Run Frontend tests
+      # 7️⃣ Run Frontend tests
       - name: Run Frontend tests
         working-directory: my-app
         run: npm test
 
-      # 1️⃣1️⃣ Build Frontend
+      # 8️⃣ Build Frontend
       - name: Build Frontend
         working-directory: my-app
         run: npm run build
