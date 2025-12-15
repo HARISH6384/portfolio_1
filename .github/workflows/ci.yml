@@ -10,14 +10,14 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # 1️⃣ Checkout the repository
+      # 1️⃣ Checkout repository
       - uses: actions/checkout@v3
 
-      # 2️⃣ Set up Node.js (shared for both backend and frontend)
+      # 2️⃣ Set up Node.js (shared for backend and frontend)
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '22'  # Updated to 22 for latest npm compatibility
+          node-version: '22' # Compatible with latest npm
           cache: 'npm'
           cache-dependency-path: |
             backend/package-lock.json
@@ -26,22 +26,19 @@ jobs:
       # 3️⃣ Install Backend dependencies
       - name: Install Backend dependencies
         working-directory: backend
-        run: npm ci --legacy-peer-deps  # Temporary flag to bypass peer dependency conflict
+        run: npm ci --legacy-peer-deps
 
-  
-
-       
+      # 4️⃣ Build Backend
       - name: Build Backend
         working-directory: backend
         run: npm run build
- 
+
+      # 5️⃣ Install Frontend dependencies
       - name: Install Frontend dependencies
         working-directory: my-app
         run: npm ci
 
-    
-
-      # 8️⃣ Build Frontend
+      # 6️⃣ Build Frontend
       - name: Build Frontend
         working-directory: my-app
         run: npm run build
