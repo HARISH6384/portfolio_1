@@ -10,33 +10,40 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      # 1️⃣ Checkout repository
       - uses: actions/checkout@v3
 
+      # 2️⃣ Set up Node.js
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
           node-version: '22'
           cache: 'npm'
           cache-dependency-path: |
-            backend/package-lock.json
+            backend/project/package-lock.json
             my-app/package-lock.json
 
+      # 3️⃣ Install Backend dependencies
       - name: Install Backend dependencies
-        working-directory: backend
+        working-directory: backend/project
         run: npm ci --legacy-peer-deps
 
+      # 4️⃣ Run Backend tests
       - name: Run Backend tests
-        working-directory: backend
+        working-directory: backend/project
         run: npm test
 
+      # 5️⃣ Build Backend
       - name: Build Backend
-        working-directory: backend
+        working-directory: backend/project
         run: npm run build
 
+      # 6️⃣ Install Frontend dependencies
       - name: Install Frontend dependencies
         working-directory: my-app
         run: npm ci
 
+      # 7️⃣ Build Frontend
       - name: Build Frontend
         working-directory: my-app
         run: npm run build
