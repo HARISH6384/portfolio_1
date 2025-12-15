@@ -1,0 +1,58 @@
+name: portfolio-ci
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1️⃣ Checkout repository
+      - uses: actions/checkout@v3
+
+      # 2️⃣ Set up Node.js
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '22'
+          cache: 'npm'
+          cache-dependency-path: |
+            backend/project/package-lock.json
+            my-app/package-lock.json
+
+      # 3️⃣ Install Backend dependencies
+      - name: Install Backend dependencies
+        working-directory: backend/project
+        run: npm ci --legacy-peer-deps
+
+      # 4️⃣ Run Backend tests
+      - name: Run Backend tests
+        working-directory: backend/project
+        run: npm test
+
+      # 5️⃣ Build Backend
+      - name: Build Backend
+        working-directory: backend/project
+        run: npm run build
+
+      # 6️⃣ Install Frontend dependencies
+      - name: Install Frontend dependencies
+        working-directory: my-app
+        run: |
+          if [ -f package.json ]; then
+            npm install --legacy-peer-deps
+          else
+            echo "Frontend package.json not found, skipping."
+          fi
+
+      - name: Build Frontend
+        working-directory: my-app
+        run: |
+          if npm run | grep -q "build"; then
+            npm run build
+          else
+            echo "No build script found, skipping frontend build."
+          fi
