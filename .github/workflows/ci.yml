@@ -28,27 +28,27 @@ jobs:
         working-directory: backend
         run: npm ci --legacy-peer-deps  # Temporary flag to bypass peer dependency conflict
 
-      # 4️⃣ Run Backend tests (commented out until "test" script is added to backend/package.json)
-      # - name: Run Backend tests
-      #   working-directory: backend
-      #   run: npm test
+      # 4️⃣ Run Backend tests (now enabled since "test" script exists in backend/package.json)
+      - name: Run Backend tests
+        working-directory: backend
+        run: npm test
 
-      # 5️⃣ Build Backend (commented out until "build" script is added to backend/package.json)
-      # - name: Build Backend
-      #   working-directory: backend
-      #   run: npm run build
+      # 5️⃣ Build Backend (now enabled since "build" script exists in backend/package.json)
+      - name: Build Backend
+        working-directory: backend
+        run: npm run build
 
       # 6️⃣ Install Frontend dependencies
       - name: Install Frontend dependencies
         working-directory: my-app
         run: npm ci
 
-      # 7️⃣ Run Frontend tests (commented out until "test" script is added to my-app/package.json)
+      # 7️⃣ Run Frontend tests (commented out since no "test" script in my-app/package.json)
       # - name: Run Frontend tests
       #   working-directory: my-app
       #   run: npm test
 
-      # 8️⃣ Build Frontend (commented out until "build" script is added to my-app/package.json)
-      # - name: Build Frontend
-      #   working-directory: my-app
-      #   run: npm run build
+      # 8️⃣ Build Frontend (now enabled since "build" script exists in my-app/package.json)
+      - name: Build Frontend
+        working-directory: my-app
+        run: npm run build
