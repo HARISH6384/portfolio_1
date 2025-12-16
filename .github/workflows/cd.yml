@@ -1,0 +1,23 @@
+name: Portfolio CI/CD
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  backend-deploy:
+    name: Deploy Backend to Render
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Deploy backend
+        env:
+          RENDER_API_KEY: ${{ secrets.RENDER_API_KEY }}
+        run: |
+          curl -X POST "https://api.render.com/deploy/YOUR_BACKEND_SERVICE_ID" \
+          -H "Authorization: Bearer $RENDER_API_KEY" \
+          -H "Accept: application/json" \
+          -d '{}'
