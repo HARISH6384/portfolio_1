@@ -3,5 +3,13 @@
     "@nestjs/cli": "^11.0.14",
      
     "fastify-multipart": "^5.3.1"
-  }
+  },
+
+"scripts": {
+  "build": "nest build",
+  "start": "node dist/main.js",
+  "start:dev": "nest start --watch"
+}
+
+
 }
