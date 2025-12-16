@@ -128,25 +128,33 @@ export default function ContactPage() {
 <form
   className="space-y-6"
   onSubmit={async (e) => {
-    e.preventDefault();
+  e.preventDefault();
 
-    const form = e.currentTarget;
-    const data = {
-      name: (form.elements.namedItem("name") as HTMLInputElement).value,
-      email: (form.elements.namedItem("email") as HTMLInputElement).value,
-      description: (form.elements.namedItem("description") as HTMLTextAreaElement).value,
-    };
+  const form = e.currentTarget;
+  const data = {
+    name: (form.elements.namedItem("name") as HTMLInputElement).value,
+    email: (form.elements.namedItem("email") as HTMLInputElement).value,
+    description: (form.elements.namedItem("description") as HTMLTextAreaElement).value,
+  };
 
-    const res = await fetch("http://localhost:5000/portfolio", {
+  try {
+    const res = await fetch("https://portfolio-webserver-cf1n.onrender.com/portfolio", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data),
     });
 
+    if (!res.ok) throw new Error("Failed to send message");
+
     const result = await res.json();
     alert("Message sent!");
-    
-  }}
+    form.reset();
+  } catch (error) {
+    alert("Oops! Something went wrong.");
+    console.error(error);
+  }
+}}
+
 >
   <div>
     <label className="block mb-2 font-semibold">Name</label>
