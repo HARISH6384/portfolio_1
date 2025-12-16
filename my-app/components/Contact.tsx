@@ -148,6 +148,7 @@ export default function ContactPage() {
 
     const result = await res.json();
     alert("Message sent!");
+    console.log(result,"message");
     form.reset();
   } catch (error) {
     alert("Oops! Something went wrong.");
@@ -200,3 +201,12 @@ export default function ContactPage() {
     </section>
   );
 }
+
+
+
+
+
+
+
+
+
