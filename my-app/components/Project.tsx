@@ -9,7 +9,7 @@ export default function Projects() {
       id: 1,
       title: "Flim Flix",
       url: "https://flim-flix-nine.vercel.app/",
-      // img: "/images/flimflix.png",
+      img: "/images/flimflix.png",
       description: "Developed FilmFlix, a modern movie browsing website using React.js, Vite, and Tailwind CSS, with real-time data fetched from the TMDB API.",
       tech: "React.Js, Node.Js, MongoDB",
       back:"  Users can explore trending, popular,and top-rated movies with dynamic content (titles,posters, ratings, overviews) and enjoy a fast, mobile friendly UI with smooth navigation.."
@@ -18,15 +18,16 @@ export default function Projects() {
       id: 2,
       title: "Nexus",
       url: "https://www.nexuslearn.us/",
-      // img: "/images/travel.png",
-      description: " Built with React.js andTailwind CSS, Travel Go is a modern, mobile-friendly platform that shares travel experiences, destination guides, and tips to inspire fellow travelers",
+      img: "/images/nexus.png",
+      description: " Built with React.js andTailwind CSS, Travel Go is a modern, mobile-friendly platform",
       tech: "React.Js, Node.Js, MongoDB",
-      back:"Component-based architecture withsmooth routing, categorized blogs (Destinations,Tips, Culture, etc.), and a fast, responsive UI using utility-first styling"
+      back:"Component-based architecture withsmooth routing,and a fast, responsive UI using utility-first styling"
     },
     {
       id: 3,
       title: "Zaap Force",
       url: "https://zaapforce.vercel.app/",
+      img: "/images/zaap.png",
       description: "On Progress",
     
     },
@@ -71,7 +72,7 @@ export default function Projects() {
                     <div className="absolute w-full h-full rounded-xl overflow-hidden [backface-visibility:hidden] bg-white flex flex-col">
                       <div className="h-1/2">
                         <img
-                          // src={project.img}
+                          src={project.img}
                           alt={project.title}
                           className="w-full h-full object-cover"
                         />
