@@ -1,0 +1,49 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html, body {
+  @apply m-0 p-0 box-border scroll-smooth bg-gray-900 text-white;
+  font-family: 'Inter', sans-serif;
+}
+
+
+html {
+  scroll-behavior: smooth;
+}
+.animate-gradient-x {
+  background-size: 200% 200%;
+}
+/* Custom 3D Flip Card Styles */
+.perspective {
+  perspective: 1000px;
+}
+
+.book {
+  transform-style: preserve-3d;
+}
+
+.backface-hidden {
+  backface-visibility: hidden;
+}
+
+.rotate-y-180 {
+  transform: rotateY(180deg);
+}
+
+.group-hover\:rotate-y-180:hover {
+  transform: rotateY(180deg);
+}
+
+@keyframes zoom {
+  0% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(1.05);
+  }
+}
+
+.animate-zoom {
+  animation: zoom 20s ease-in-out infinite alternate;
+}
