@@ -100,16 +100,16 @@ export default function ContactPage() {
     ).value;
 
     try {
-      await emailjs.send(
-        "service_gd41fhz",
-        "template_wqyxxff",
-        {
-          from_name: name,
-          from_email: email,
-          message: message,
-        },
-        "ROYmexzjQCZBy12mJ"
-      );
+     await emailjs.send(
+  process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID!,
+  process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID!,
+  {
+    from_name: name,
+    from_email: email,
+    message: message,
+  },
+  process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY!
+);
 
       alert("✅ Message Sent Successfully!");
 
