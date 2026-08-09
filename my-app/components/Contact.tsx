@@ -2,17 +2,18 @@
 
 import {
   FaEnvelope,
-  FaPhoneAlt,
   FaMapMarkerAlt,
   FaGithub,
   FaInstagram,
   FaWhatsapp,
 } from "react-icons/fa";
 import { motion } from "framer-motion";
-import { ReactNode } from "react";
+import { ReactNode, useState } from "react";
+import emailjs from "@emailjs/browser";
 
 export default function ContactPage() {
-  // AnimatedLine helper
+  const [loading, setLoading] = useState(false);
+
   function AnimatedLine({
     children,
     delay = 0,
@@ -62,7 +63,7 @@ export default function ContactPage() {
           rel="noopener noreferrer"
           className="hover:underline"
         >
-          github
+          GitHub
         </a>
       ),
     },
@@ -75,31 +76,64 @@ export default function ContactPage() {
           rel="noopener noreferrer"
           className="hover:underline"
         >
-          instagram
+          Instagram
         </a>
       ),
     },
-
     {
       icon: <FaMapMarkerAlt size={22} color="#F1A900" />,
       content: <>Coimbatore, India</>,
     },
   ];
 
+  const sendEmail = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    setLoading(true);
+
+    const form = e.currentTarget;
+
+    const name = (form.elements.namedItem("name") as HTMLInputElement).value;
+    const email = (form.elements.namedItem("email") as HTMLInputElement).value;
+    const message = (
+      form.elements.namedItem("description") as HTMLTextAreaElement
+    ).value;
+
+    try {
+      await emailjs.send(
+        "service_gd41fhz",
+        "template_wqyxxff",
+        {
+          from_name: name,
+          from_email: email,
+          message: message,
+        },
+        "ROYmexzjQCZBy12mJ"
+      );
+
+      alert("✅ Message Sent Successfully!");
+
+      form.reset();
+    } catch (error) {
+      console.error(error);
+      alert("❌ Failed to send message.");
+    }
+
+    setLoading(false);
+  };
+
   return (
     <section
       id="contact"
-      className="min-h-screen bg-[#233729] mt-40 text-[#F6F1E5] px-6 py-16 flex flex-col items-center "
+      className="min-h-screen bg-[#233729] mt-40 text-[#F6F1E5] px-6 py-16 flex flex-col items-center"
     >
-      {/* Page Title */}
       <AnimatedLine delay={0}>
-        <h1 className="text-[48px]  h1-hero font-bold mb-12 text-[#F6F1E5]">
+        <h1 className="text-[48px] h1-hero font-bold mb-12 text-[#F6F1E5]">
           Contact Me
         </h1>
       </AnimatedLine>
 
       <div className="max-w-6xl w-full grid grid-cols-1 md:grid-cols-2 gap-16">
-        {/* LEFT SIDE */}
         <div className="space-y-8">
           <AnimatedLine delay={0.2}>
             <p className="text-lg leading-relaxed opacity-90 max-w-md">
@@ -109,7 +143,6 @@ export default function ContactPage() {
             </p>
           </AnimatedLine>
 
-          {/* CONTACT DETAILS */}
           <div className="space-y-4">
             {contacts.map((c, index) => (
               <AnimatedLine key={index} delay={0.4 + index * 0.2}>
@@ -122,70 +155,50 @@ export default function ContactPage() {
           </div>
         </div>
 
-        {/* RIGHT SIDE – CONTACT FORM */}
         <AnimatedLine delay={1.5}>
           <div className="bg-white text-[#233729] rounded-lg p-8 shadow-xl">
-<form
-  className="space-y-6"
-  onSubmit={async (e) => {
-    e.preventDefault();
+            <form className="space-y-6" onSubmit={sendEmail}>
+              <div>
+                <label className="block mb-2 font-semibold">Name</label>
+                <input
+                  name="name"
+                  type="text"
+                  required
+                  className="w-full p-3 rounded bg-[#F6F1E5] focus:outline-none"
+                  placeholder="Your name"
+                />
+              </div>
 
-    const form = e.currentTarget;
-    const data = {
-      name: (form.elements.namedItem("name") as HTMLInputElement).value,
-      email: (form.elements.namedItem("email") as HTMLInputElement).value,
-      description: (form.elements.namedItem("description") as HTMLTextAreaElement).value,
-    };
+              <div>
+                <label className="block mb-2 font-semibold">Email</label>
+                <input
+                  name="email"
+                  type="email"
+                  required
+                  className="w-full p-3 rounded bg-[#F6F1E5] focus:outline-none"
+                  placeholder="you@example.com"
+                />
+              </div>
 
-    const res = await fetch("http://localhost:5000/portfolio", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(data),
-    });
+              <div>
+                <label className="block mb-2 font-semibold">Message</label>
+                <textarea
+                  name="description"
+                  rows={5}
+                  required
+                  className="w-full p-3 rounded bg-[#F6F1E5] focus:outline-none"
+                  placeholder="Write your message..."
+                ></textarea>
+              </div>
 
-    const result = await res.json();
-    alert("Message sent!");
-    
-  }}
->
-  <div>
-    <label className="block mb-2 font-semibold">Name</label>
-    <input
-      name="name"
-      type="text"
-      className="w-full p-3 rounded bg-[#F6F1E5] focus:outline-none"
-      placeholder="Your name"
-    />
-  </div>
-
-  <div>
-    <label className="block mb-2 font-semibold">Email</label>
-    <input
-      name="email"
-      type="email"
-      className="w-full p-3 rounded bg-[#F6F1E5] focus:outline-none"
-      placeholder="you@example.com"
-    />
-  </div>
-
-  <div>
-    <label className="block mb-2 font-semibold">Message</label>
-    <textarea
-      name="description"
-      rows={5}
-      className="w-full p-3 rounded bg-[#F6F1E5] focus:outline-none"
-      placeholder="Write your message..."
-    ></textarea>
-  </div>
-
-  <button
-    type="submit"
-    className="mt-4 w-full bg-[#F1A900] text-[#233729] font-bold py-3 rounded-lg hover:bg-[#d89200] transition"
-  >
-    Send Message
-  </button>
-</form>
-
+              <button
+                type="submit"
+                disabled={loading}
+                className="mt-4 w-full bg-[#F1A900] text-[#233729] font-bold py-3 rounded-lg hover:bg-[#d89200] transition disabled:opacity-60"
+              >
+                {loading ? "Sending..." : "Send Message"}
+              </button>
+            </form>
           </div>
         </AnimatedLine>
       </div>
